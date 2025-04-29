@@ -97,6 +97,7 @@ jobs:
           input="${{ github.event.inputs.target }}"
 
           if [[ -z "$input" ]]; then
+            python -V
             server_lists=$(python .github/scripts/generate_docker_list.py)
 
             echo "lists=$server_lists"

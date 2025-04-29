@@ -65,8 +65,6 @@ concurrency:
 jobs:
   check-vm:
     runs-on: ubuntu-24.04
-    container:
-      image: modelcloud/gptqmodel:alpine-ci-v1
     outputs:
       ip: ${{ steps.get_ip.outputs.ip }}
       task_list: ${{ steps.assign.outputs.task_list }}
@@ -80,11 +78,9 @@ jobs:
           echo "upload_release: ${{ inputs.upload_release }}"
           echo "upload_pypi: ${{ inputs.upload_pypi }}"
 
-      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: 3.13
-          cache: 'pip'
 
       - name: Assign tasks
         id: assign

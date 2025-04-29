@@ -80,9 +80,10 @@ jobs:
           echo "upload_release: ${{ inputs.upload_release }}"
           echo "upload_pypi: ${{ inputs.upload_pypi }}"
 
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.12
+          python-version: 3.13
 
       - name: Assign tasks
         id: assign
@@ -127,8 +128,8 @@ jobs:
     needs:
       - check-vm
     if: needs.check-vm.outputs.task_list != '' && !cancelled()
-#    container:
-#      image: ${{ needs.check-vm.outputs.ip }}:5000/modelcloud/gptqmodel:${{ matrix.tag }}
+    #    container:
+    #      image: ${{ needs.check-vm.outputs.ip }}:5000/modelcloud/gptqmodel:${{ matrix.tag }}
     # compiler_cuda121-torch2.1.2-python39)
     steps:
       - name: Parse tag
@@ -235,14 +236,14 @@ jobs:
           twine check dist/$whl
           pip install dist/$whl
 
-#      - name: Upload wheel
-#        continue-on-error: true
-#        run: |
-#          sha256=$(sha256sum dist/${{ env.WHL_NAME }})
-#          response=$(curl -s -F "runid=${{ github.run_id }}" -F "repo=${{ env.repo }}" -F "ref=${{ env.ref }}" -F "sha256=$sha256" -F "file=@dist/${{ env.WHL_NAME }}" http://${{ needs.check-vm.outputs.ip }}/gpu/whl/upload)
-#          if [ "$response" -eq 0 ]; then
-#            echo "UPLOADED=1" >> $GITHUB_ENV
-#          fi
+      #      - name: Upload wheel
+      #        continue-on-error: true
+      #        run: |
+      #          sha256=$(sha256sum dist/${{ env.WHL_NAME }})
+      #          response=$(curl -s -F "runid=${{ github.run_id }}" -F "repo=${{ env.repo }}" -F "ref=${{ env.ref }}" -F "sha256=$sha256" -F "file=@dist/${{ env.WHL_NAME }}" http://${{ needs.check-vm.outputs.ip }}/gpu/whl/upload)
+      #          if [ "$response" -eq 0 ]; then
+      #            echo "UPLOADED=1" >> $GITHUB_ENV
+      #          fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

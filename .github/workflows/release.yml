@@ -82,14 +82,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.13
-
-      - name: Select server
-        id: get_ip
-        run: |
-          echo "ip=${RUNNER}" >> "$GITHUB_OUTPUT"
-          echo "GPU_IP=${RUNNER}" >> $GITHUB_ENV
-          echo "ip: $ip"
+          python-version: 3.12
 
       - name: Assign tasks
         id: assign

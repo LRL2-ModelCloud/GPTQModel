@@ -169,7 +169,7 @@ jobs:
         id: cuda-toolkit
         with:
           cuda: '${{ env.CUDA_VERSION }}'
-          log-file-suffix: '${{ matrix.tag }}-${{matrix.os}}.txt'
+#          log-file-suffix: '${{ matrix.tag }}-${{matrix.os}}.txt'
           use-local-cache: false
           use-github-cache: false
 
